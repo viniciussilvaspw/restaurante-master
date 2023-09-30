@@ -1,0 +1,42 @@
+<div fxHide.xs class="container-btn-back" fxLayoutAlign="end" [fxHide]="false">
+  <a mat-button [routerLink]="['/client/list']">
+    <mat-icon>keyboard_backspace</mat-icon>Voltar</a>
+</div>
+<h3 *ngIf="!this.isEdit()" fxLayoutAlign="center">Cadastrar Cliente</h3>
+<h3 *ngIf="this.isEdit()" fxLayoutAlign="center">Editar Cliente</h3>
+<form [formGroup]="formClient">
+  <div class="example-container">
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" autocomplete="off"/>
+      <mat-error *ngIf="hasError('name', 'required')">Informe o nome</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>RG</mat-label>
+      <input matInput formControlName="rg" autocomplete="off"/>
+      <mat-error *ngIf="hasError('rg', 'required')">Informe o RG</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>CPF</mat-label>
+      <input [imask]="{mask: '000.000.000-00'}" matInput formControlName="cpf" autocomplete="off"/>
+      <mat-error *ngIf="hasError('cpf', 'required')">Informe o CPF</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Endereço</mat-label>
+      <input matInput formControlName="adress" autocomplete="off"/>
+      <mat-error *ngIf="hasError('adress', 'required')" >Informe o Endereço</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Telefone</mat-label>
+      <input matInput formControlName="fone" autocomplete="off"/>
+      <mat-error *ngIf="hasError('fone', 'required')">Informe o Numero de Telefone</mat-error>
+    </mat-form-field>
+
+    <button mat-button class="btn-register" mat-raised-button color="warn" (click)="save()" cdkFocusInitial *ngIf="!this.edit">Salvar</button>
+    <button class="clickable btn-register" mat-raised-button color="warn" (click)="update()" *ngIf="this.edit" id="item-btn-update">Atualizar</button>
+  </div>
+</form>

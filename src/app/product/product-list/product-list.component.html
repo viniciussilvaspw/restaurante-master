@@ -1,0 +1,80 @@
+<div class="content">
+  <div>
+    <div class="loading-shade"
+         *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between end" style="margin-bottom: 15px">
+      <h3>Produtos</h3>
+      <button mat-raised-button class="btn-new" [routerLink]="['/product/register']">{{'Cadastrar'}}</button>
+    </div>
+
+    <div class="mat-elevation-z2" fxLayout="column">
+      <div mat-header-row class="table-header" fxFlex fxLayout="row">
+        <div [fxFlex]="30" class="mt10 mr10 ml10">
+          <mat-form-field appearance="outline" class="select-size-list">
+            <mat-select [(ngModel)]="selectedSizePage" (selectionChange)="changePageSize($event)">
+              <mat-option *ngFor="let pageOption of pageSizeOptions" [value]="pageOption">
+                {{pageOption}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span class="label-select-pagination mt5 mr5 ml5">Produtos por página</span>
+        </div>
+        <div [fxFlex]="70" class="mt10 mr10 ml10" fxLayoutAlign="end">
+          <mat-form-field appearance="outline" [fxFlex]="50">
+            <mat-label>{{'Procurar'}}</mat-label>
+            <input matInput #searhParamElement  (keyup.enter)="applyFilter($event.target.value)"
+                   class="search-input">
+            <mat-icon matPrefix matSuffix id="searchIcon" class="clickable" (click)="applyFilter(searhParamElement.value)" style="color: #dd4b39" svgIcon="search"></mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="example-container mat-elevation-z8">
+        <table mat-table [dataSource]="product" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+          <ng-container matColumnDef="id">
+            <th [ngStyle]="{'width': tdWidth + '%'}" mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let row">{{row.id}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th [ngStyle]="{'width': tdWidth + '%'}" mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let row">{{row.name}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th [ngStyle]="{'width': tdWidth + '%'}" mat-header-cell *matHeaderCellDef>Preço</th>
+            <td mat-cell *matCellDef="let row">R${{row.price}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="cost">
+            <th [ngStyle]="{'width': tdWidth + '%'}" mat-header-cell *matHeaderCellDef>Custo</th>
+            <td mat-cell *matCellDef="let row">R${{row.cost}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="productCategoryDto">
+            <th [ngStyle]="{'width': tdWidth + '%'}" mat-header-cell *matHeaderCellDef>Tipo</th>
+            <td mat-cell *matCellDef="let row">{{row.productCategoryDto.description}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="options">
+            <th [ngStyle]="{'width': tdWidth + '%'}" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row" class="td-content"><mat-icon [matMenuTriggerFor]="menu" [matMenuTriggerData]="{row: row}" svgIcon="more"></mat-icon></td>
+
+            <mat-menu #menu="matMenu">
+              <ng-template matMenuContent let-row="row">
+                <button mat-menu-item [routerLink]="['/product/update', row.id]">
+                  {{'Edit'}}
+                </button>
+                <button mat-menu-item (click)="deleteProduct(row);">{{'Delete'}}</button>
+              </ng-template>
+            </mat-menu>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <mat-paginator [length]="resultsLength" [pageSize]="selectedSizePage"></mat-paginator>
+    </div>
+  </div>
+</div>

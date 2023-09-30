@@ -1,0 +1,39 @@
+<!--INICIO DO CARRINHO-->
+<div class="menu-item-info-box">
+  <div class="menu-item-info-box" style=" margin-bottom: 0px" fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon svgIcon="cart"></mat-icon>
+    <h3>Carrinho</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="menu-item-info-box">
+
+    <div *ngIf="!items().length">
+      <p class="text-center">
+        Seu carrinho está vazio!
+      </p>
+    </div>
+    <div class="table-responsive" *ngIf="items().length">
+      <table class="table">
+        <tbody>
+        <tr *ngFor="let item of items()">
+          <th>({{item.quantity}}x) {{item.product.name}}</th>
+          <td class="text-right">{{item.value() | currency: 'BRL': true}}</td>
+          <td class="text-right">
+            <button (click)="removeItem(item)" class="btn btn-sm danger"><mat-icon svgIcon="minus"></mat-icon></button>
+          </td>
+        </tr>
+        <tr>
+          <th>Total:</th>
+          <td class="text-right">{{total() | currency: 'BRL': true}}</td>
+        </tr>
+        </tbody></table>
+    </div>
+  </div>
+  <div class="menu-item-info-box" *ngIf="items().length">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button (click)="clear()" type="button" class="btn btn-danger" style="margin-right: 8px"><mat-icon svgIcon="trash"></mat-icon> Limpar</button>
+      <button [routerLink]="['/order']" class="btn btn-success"><mat-icon svgIcon="card"></mat-icon> Fechar Pedido</button>
+    </div>
+  </div>
+</div>
+<!-- FIM DO CARRINHO -->

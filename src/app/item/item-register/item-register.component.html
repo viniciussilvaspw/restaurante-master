@@ -1,0 +1,82 @@
+<div fxHide.xs class="container-btn-back" fxLayoutAlign="end" [fxHide]="false">
+  <a mat-button [routerLink]="['/item/list']">
+    <mat-icon>keyboard_backspace</mat-icon>Voltar</a>
+</div>
+<h3 *ngIf="!this.isEdit()" fxLayoutAlign="center">Cadastrar Insumo</h3>
+<h3 *ngIf="this.isEdit()" fxLayoutAlign="center">Editar Insumo</h3>
+<form [formGroup]="formItem">
+  <div class="example-container">
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" autocomplete="off"/>
+      <mat-error *ngIf="hasError('name', 'required')">Informe o nome</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Custo</mat-label>
+      <input matInput formControlName="cost" autocomplete="off"/>
+      <mat-error *ngIf="hasError('cost', 'required')">Informe o Custo</mat-error>
+    </mat-form-field>
+    <div fxLayoutAlign="row space-between">
+      <div fxFlex="50" style="margin-right: 20px">
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Quantidade</mat-label>
+      <input matInput formControlName="quantity" autocomplete="off"/>
+      <mat-error *ngIf="hasError('quantity', 'required')">Informe o Quantidade</mat-error>
+    </mat-form-field>
+      </div>
+      <div fxFlex="50">
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Quantidade Minima</mat-label>
+      <input matInput formControlName="minQuantity" autocomplete="off"/>
+      <mat-error *ngIf="hasError('minQuantity', 'required')">Informe o Quantidade Minima</mat-error>
+    </mat-form-field>
+      </div>
+    </div>
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Validade</mat-label>
+      <input matInput formControlName="shelfLife" autocomplete="off"/>
+      <mat-error *ngIf="hasError('shelfLife', 'required')">Validade</mat-error>
+    </mat-form-field>
+
+
+    <label id="example-radio-group-label">Selecione a unidade de medida</label>
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group"
+      formControlName="unit">
+      <div fxLayoutAlign="row space-between">
+      <mat-radio-button class="example-radio-button" *ngFor="let unit of units" [value]="unit">
+        {{unit}}
+      </mat-radio-button>
+      </div>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Categoria</mat-label>
+      <mat-select required placeholder="categoria" [(ngModel)]="selectedCategory" [formControl]="formItem.get('itemCategoryDto')" [compareWith]="compareCategory">
+        <mat-option *ngFor="let category of categoryList" [value]="category">
+          {{ category.description}}
+        </mat-option>
+      </mat-select>
+      <mat-error class="error-form-field"
+                 *ngIf="formItem.get('itemCategoryDto').touched && hasError('itemCategoryDto', 'required')">Selecione uma categoria
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Fornecedor</mat-label>
+      <mat-select required placeholder="Fornecedor" [(ngModel)]="selectedProvider" [formControl]="formItem.get('providerDto')" [compareWith]="compareProvider">
+        <mat-option *ngFor="let provider of providerList" [value]="provider">
+          {{ provider.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error class="error-form-field"
+                 *ngIf="formItem.get('itemCategoryDto').touched && hasError('itemCategoryDto', 'required')">Selecione uma categoria
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-button class="btn-register" mat-raised-button color="warn" (click)="save()" cdkFocusInitial *ngIf="!this.edit">Salvar</button>
+    <button class="clickable btn-register" mat-raised-button color="warn" (click)="update()" *ngIf="this.edit" id="item-btn-update">Atualizar</button>
+  </div>
+</form>

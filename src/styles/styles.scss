@@ -1,0 +1,41 @@
+@import "material";
+@import "main";
+@import "utils";
+@import "responsive";
+
+@import "~angular-tree-component/dist/angular-tree-component.css";
+
+// Remover padding padrão do mat-dialog-container
+.full-bleed-dialog .mat-dialog-container {
+  padding: 0px;
+}
+
+//Classe personalizada para o backdrop de passwardDialog e MaterialImageDialog
+.blackBackdrop{
+  background: black;
+}
+
+.blackBackdrop.cdk-overlay-backdrop.cdk-overlay-backdrop-showing{
+  opacity: 0.8;
+}
+
+// 
+ .full-bleed-img-dialog .mat-dialog-container{
+  padding: 0px;
+  // width: 100%;
+  // height: 100%;
+}
+
+.full-bleed-img-dialog .mat-dialog-container :hover{
+  cursor: zoom-out;
+}
+
+.full-bleed-img-dialog .mat-dialog-content{
+  padding: 0px;
+  margin: 0px;
+  width: 800px;
+  height: 600px;
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-size: cover;
+}

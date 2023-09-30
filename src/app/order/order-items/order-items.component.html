@@ -1,0 +1,34 @@
+<div *ngIf="items.length === 0">
+  <p style="margin-left: 30px">
+    Não há itens no seu carrinho. Que tal começar por <a [routerLink]="['/table-list']">aqui</a>?
+  </p>
+</div>
+<div class="col-xs-12 table-responsive" *ngIf="items.length > 0">
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th class="text-center">Quantidade</th>
+      <th>Item</th>
+      <th>Descrição</th>
+      <th class="text-right">Subtotal</th>
+      <th class="text-right"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items">
+      <td class="text-center">
+        <button (click)="emitDecreaseQty(item)" class="btn btn-sm"><mat-icon svgIcon="minus"></mat-icon></button>
+        {{item.quantity}}
+        <button (click)="emitIncreaseQty(item)" class="btn btn-sm"><mat-icon svgIcon="plus"></mat-icon></button>
+      </td>
+      <td>{{item.product.name}}</td>
+      <td class="text-right">{{item.value() | currency: 'BRL': true}}</td>
+      <td class="text-right">
+        <button (click)="emitRemove(item)" class="btn btn-sm danger"><mat-icon svgIcon="x"></mat-icon></button>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>

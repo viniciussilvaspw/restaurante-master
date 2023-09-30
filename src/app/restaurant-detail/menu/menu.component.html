@@ -1,0 +1,16 @@
+<br>
+<!--INÍCIO DO MENU -->
+<div fxLayout="row" fxLayoutAlign=" start">
+<div class="col-md-9 ">
+
+  <app-menu-item
+    *ngFor="let item of products"
+    [product]="item" (add)="shoppingCart.addItem($event)" >
+  </app-menu-item>
+</div>
+
+<div class="col-md-3 col-xs-12">
+  <app-shopping-cart #shoppingCart></app-shopping-cart>
+</div>
+</div>
+<!-- FIM DO MENU -->

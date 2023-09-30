@@ -1,0 +1,95 @@
+<div fxHide.xs class="container-btn-back" fxLayoutAlign="end" [fxHide]="false">
+  <a mat-button [routerLink]="['/product/list']">
+    <mat-icon>keyboard_backspace</mat-icon>Voltar</a>
+</div>
+<h3 *ngIf="!this.isEdit()" fxLayoutAlign="center">Cadastrar Produto</h3>
+<h3 *ngIf="this.isEdit()" fxLayoutAlign="center">Editar Produto</h3>
+<form [formGroup]="productForm">
+  <div class="container">
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name"/>
+      <mat-error *ngIf="hasError('name', 'required')">Informe o nome</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Custo</mat-label>
+      <input matInput formControlName="cost" [(ngModel)]="calculatedCost"/>
+      <mat-error *ngIf="hasError('cost', 'required')">Informe o Custo</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Preço</mat-label>
+      <input matInput formControlName="price"/>
+      <mat-error *ngIf="hasError('price', 'required')">Informe o Preço</mat-error>
+    </mat-form-field>
+
+    <label id="control-radio-group-label">O Produto terá controle de estoque?</label>
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group"
+      formControlName="control">
+        <mat-radio-button value="Sim">Sim</mat-radio-button>
+        <mat-radio-button value="Não" checked="true">Não</mat-radio-button>
+    </mat-radio-group>
+    <div *ngIf="productForm.get('control').value == 'Sim'">
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Quantidade</mat-label>
+      <input matInput formControlName="quantity"/>
+      <mat-error>Informe a Quantidade</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Quantidade Minima</mat-label>
+      <input matInput formControlName="minQuantity"/>
+      <mat-error>Informe a Quantidade Minima</mat-error>
+    </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" fxFlexFill class="ml5 mr5">
+      <mat-label>Categoria</mat-label>
+      <mat-select required placeholder="categoria" [(ngModel)]="selectedCategory" [formControl]="productForm.get('productCategoryDto')" [compareWith]="compareCategory">
+        <mat-option *ngFor="let category of categoryList" [value]="category">
+          {{ category.description}}
+        </mat-option>
+      </mat-select>
+      <mat-error class="error-form-field"
+                 *ngIf="productForm.get('productCategoryDto').touched && hasError('productCategoryDto', 'required')">Selecione uma categoria
+      </mat-error>
+    </mat-form-field>
+    <div *ngIf="productForm.get('control').value == 'Não'">
+    <div fxLayoutAlign="row space-between">
+      <div fxFlex="50">
+        <h2>Insumos</h2>
+      <div class="container-drag">
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="items"
+          [cdkDropListConnectedTo]="[doneList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)" id="ck1">
+          <div class="example-box" *ngFor="let item of items" cdkDrag [cdkDragData]="item">{{item.name}} <strong>R${{item.cost}}{{item.unit}}</strong></div>
+        </div>
+      </div>
+      </div>
+      <div fxFlex="50">
+        <h2>Ficha Técnica</h2>
+      <div class="container-drag">
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="fichaTecnica"
+          [cdkDropListConnectedTo]="[todoList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListEnterPredicate]="alreadyIntoArray" id="ck2">
+          <div class="example-box" *ngFor="let ficha of fichaTecnica, let i=index" cdkDrag>{{ficha.name}}<strong>{{product.productItemDtos[i]?.qtde}}</strong></div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    <button mat-button class="btn-register" mat-raised-button color="warn" (click)="save()" cdkFocusInitial *ngIf="!this.edit">Salvar</button>
+    <button class="clickable btn-register" mat-raised-button color="warn" (click)="update()" *ngIf="this.edit" id="product-btn-update">Atualizar</button>
+  </div>
+</form>

@@ -1,0 +1,54 @@
+<!--INICIO DO CONTEUDO-->
+<section class="content">
+  <section class="menu-item-info-box">
+
+    <form>
+      <div class="menu-item-info-box">
+          <h3  style="min-height: 20px; padding-top: 22px; padding-to: 22px; margin-left: 10px; margin-right: 10px">
+            <mat-icon svgIcon="cart"></mat-icon> Finalize o seu pedido
+          </h3>
+      </div>
+        <div class="col-xs-12">
+          <p class="lead" style="margin-left: 30px">Itens do Pedido:</p>
+        </div>
+
+        <app-order-items [items]="cartItems()"
+                        (increaseQty)="increaseQty($event)"
+                        (decreaseQty)="decreaseQty($event)"
+                        (remove)="remove($event)">
+        </app-order-items>
+
+      <div fxLayout="row" fxLayoutAlign="space-between none" style="margin-left: 30px">
+
+          <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            fxLayout="column" fxLayoutAlign="start start">
+            <label id="control-radio-group-label">Formas de pagamento:</label>
+            <mat-radio-button value="Dinheiro" checked="true" style="margin-left: 10px">Dinheiro</mat-radio-button>
+            <mat-radio-button value="Cartão de Débito" style="margin-left: 10px">Cartão de Débito</mat-radio-button>
+            <mat-radio-button value="Cartão Refeição" style="margin-left: 10px">Cartão Refeição</mat-radio-button>
+          </mat-radio-group>
+
+        <div class="col-sm-6 col-xs-12">
+          <p class="lead">Total:</p>
+
+          <app-delivery-costs
+            [itemsValue]="itemsValue()">
+          </app-delivery-costs>
+        </div>
+      </div>
+    </form>
+
+<!--        <button (click)="checkOrder(orderForm.value)" class="btn btn-success pull-right"-->
+<!--                [disabled]="!orderForm.valid || cartItems().length === 0">-->
+<!--          <i class="fa fa-credit-card"></i> Concluir Pedido-->
+<!--        </button>-->
+    <div fxLayout="row" fxLayoutAlign="end none">
+        <button class="btn btn-success" style="margin-bottom: 12px; margin-right: 12px">
+          <mat-icon svgIcon="card"></mat-icon> Concluir Pedido
+        </button>
+    </div>
+  </section>
+</section>
+<!-- FIM DO CONTEUDO-->

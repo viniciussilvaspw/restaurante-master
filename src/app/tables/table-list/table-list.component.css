@@ -1,0 +1,19 @@
+.available-background{
+  background-image: url('https://image.flaticon.com/icons/png/512/51/51882.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 5px;
+}
+
+.unavailable-background {
+  background-image: url('https://image.flaticon.com/icons/png/512/11/11034.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 5px;
+}
+mat-grid-tile {
+  background: lightblue;
+}
+

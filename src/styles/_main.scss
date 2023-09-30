@@ -1,0 +1,67 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Fontil Sans';
+}
+
+.main-container {
+    // position: absolute;
+    top: 64px;
+    left: 255px;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+}
+
+.content{
+    padding: 35px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.td-content {
+    text-align: right;
+}
+
+.dialog-back-drop-custom-class {
+    opacity: 0;
+}
+
+.dialog-user-register-container {
+    padding: 20px 20px 20px 0;
+    .mat-dialog-container {
+        padding: 0;
+        overflow: hidden;
+    }
+}
+
+.container-add-new {
+    // padding-left: 17px;
+    padding-top: 20px;
+}
+
+.span-add-new{
+    position: relative;
+    bottom: 6px;
+    margin-left: 4px;
+}
+
+.icon-add {
+    color: #FFC200;
+    position: relative;
+}
+
+mat-icon#searchIcon {
+    color: #007EFA;
+    padding-left: 9px;
+    padding-right: 17.93px;
+    width: 24px;
+}
+
